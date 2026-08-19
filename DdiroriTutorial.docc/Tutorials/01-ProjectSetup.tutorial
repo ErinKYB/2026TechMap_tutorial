@@ -1,0 +1,55 @@
+@Tutorial(time: 20) {
+    @Intro(title: "visionOS 공간 앱 시작하기") {
+        SwiftUI App lifecycle로 시작 화면과 Immersive Space를 구성하고, 실제 손 추적과 커서 시뮬레이션 중 하나를 선택할 수 있게 만듭니다.
+
+        @Image(source: ddirori-hero.png, alt: "실기기 Hand Tracking과 시뮬레이션 입력을 선택하는 Ddirori 화면")
+    }
+
+    @Section(title: "프로젝트와 Scene 구성") {
+        @ContentAndMedia {
+            Ddirori는 일반 창에서 연습 방법을 선택하고, 실제 공간 콘텐츠는 mixed Immersive Space에서 보여줍니다. 하나의 `TutorialViewModel`을 두 Scene에 주입하면 화면이 바뀌어도 상태를 공유할 수 있습니다.
+
+            @Image(source: ddirori-hero.png, alt: "Ddirori의 시작 창")
+        }
+
+        @Steps {
+            @Step {
+                Xcode에서 visionOS App 프로젝트를 만들고 SwiftUI와 RealityKit을 선택합니다. 배포 대상은 visionOS 26 이상으로 설정합니다.
+            }
+
+            @Step {
+                `WindowGroup`과 `ImmersiveSpace`를 선언하고 같은 `TutorialViewModel`을 environment에 전달합니다.
+
+                @Code(name: "ddiroriApp.swift", file: ddiroriApp.swift)
+            }
+
+            @Step {
+                시작 화면에서 `openImmersiveSpace`를 호출하고 결과가 `.opened`일 때만 모델의 진입 이벤트를 전달합니다.
+
+                @Code(name: "ContentView.swift", file: ContentView.swift)
+            }
+        }
+    }
+
+    @Section(title: "입력 모드 경계 만들기") {
+        @ContentAndMedia {
+            실기기와 시뮬레이터는 입력을 얻는 방법만 다르고 이후 판정은 같아야 합니다. 시작 화면에서는 입력 모드만 고르고, ViewModel이 알맞은 서비스를 생성하도록 책임을 나눕니다.
+        }
+
+        @Steps {
+            @Step {
+                `InputMode`에 실제 Hand Tracking과 시뮬레이터 모드를 정의하고 사용자에게 각 환경의 차이를 설명합니다.
+
+                @Code(name: "InputMode.swift", file: InputMode.swift)
+            }
+
+            @Step {
+                실제 기기에서 손 추적을 사용할 수 있도록 앱의 Info 설정에 `NSHandsTrackingUsageDescription`을 추가합니다.
+            }
+
+            @Step {
+                Signing & Capabilities에서 자신의 Development Team을 선택합니다. 팀 식별자는 저장소에 고정하지 않는 편이 협업에 안전합니다.
+            }
+        }
+    }
+}

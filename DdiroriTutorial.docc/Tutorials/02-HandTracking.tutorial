@@ -1,0 +1,69 @@
+@Tutorial(time: 25) {
+    @Intro(title: "검지 끝을 공통 공간 좌표로 변환하기") {
+        `ARKitSession`과 `HandTrackingProvider`를 실행하고, Hand Anchor와 index finger tip Joint의 변환을 결합해 RealityKit에서 사용할 좌표를 구합니다.
+
+        @Image(source: hand-transform.svg, alt: "손 Anchor 좌표와 검지 끝 Joint 좌표를 공통 공간 좌표로 결합하는 흐름")
+    }
+
+    @Section(title: "추적 서비스를 추상화하기") {
+        @ContentAndMedia {
+            ARKit을 View에 직접 넣지 않고 `AsyncStream`으로 검지 샘플을 제공하는 프로토콜을 만듭니다. 이 경계 덕분에 실제 기기와 시뮬레이터가 동일한 후속 로직을 사용합니다.
+
+            @Image(source: hand-transform.svg, alt: "Hand Tracking 데이터 흐름 다이어그램")
+        }
+
+        @Steps {
+            @Step {
+                위치, 손 방향, 추적 여부, 시간을 담는 `FingerTrackingSample`을 정의합니다. 추적이 끊겼다면 위치를 `nil`로 전달해 이전 좌표가 재사용되지 않게 합니다.
+
+                @Code(name: "HandTrackingProviding.swift", file: HandTrackingProviding.swift)
+            }
+
+            @Step {
+                샘플 스트림과 시작·종료 메서드를 가진 `HandTrackingProviding` 프로토콜을 선언합니다.
+            }
+        }
+    }
+
+    @Section(title: "ARKit Hand Tracking 실행하기") {
+        @ContentAndMedia {
+            먼저 지원 여부와 권한을 확인한 뒤 세션을 실행합니다. Anchor 업데이트마다 선호 손을 선택하고 검지 끝 Joint가 추적 중인지 검증합니다.
+        }
+
+        @Steps {
+            @Step {
+                `HandTrackingProvider.isSupported`를 확인하고 `requestAuthorization(for:)`로 Hand Tracking 권한을 요청합니다.
+            }
+
+            @Step {
+                `session.run([handTrackingProvider])`를 호출하고 `anchorUpdates`를 비동기 순회합니다.
+            }
+
+            @Step {
+                Hand Anchor의 `originFromAnchorTransform`과 Joint의 `anchorFromJointTransform`을 곱합니다.
+
+                @Code(name: "ARKitHandTrackingService.swift", file: ARKitHandTrackingService.swift)
+            }
+
+            @Step {
+                Anchor나 Joint가 유효하지 않을 때 `position == nil`, `isTracked == false`인 샘플을 내보내는지 확인합니다.
+            }
+        }
+    }
+
+    @Section(title: "실기기에서 확인하기") {
+        @Steps {
+            @Step {
+                Apple Vision Pro를 실행 대상으로 선택하고 앱의 Hand Tracking 권한을 허용합니다.
+            }
+
+            @Step {
+                손을 시야 안에 둔 뒤 검지 끝의 구체와 파티클이 손가락을 따라오는지 확인합니다.
+            }
+
+            @Step {
+                손을 시야 밖으로 빼면 표시와 판정이 즉시 멈추고 안내가 나타나는지 확인합니다.
+            }
+        }
+    }
+}
