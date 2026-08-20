@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+  <title id="title">검지 끝 좌표 변환</title>
+  <desc id="description">Hand Anchor와 검지 끝 Joint 변환을 결합해 공통 공간 위치를 얻는 흐름</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#080d18"/>
+      <stop offset="1" stop-color="#1d3556"/>
+    </linearGradient>
+    <linearGradient id="result" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#56dcc4"/>
+      <stop offset="1" stop-color="#4c9fff"/>
+    </linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-opacity="0.25"/></filter>
+  </defs>
+  <rect width="1600" height="900" rx="42" fill="url(#background)"/>
+  <circle cx="215" cy="180" r="230" fill="#4ea5ff" fill-opacity="0.06"/>
+  <circle cx="420" cy="730" r="330" fill="#55d6be" fill-opacity="0.05"/>
+
+  <g filter="url(#shadow)" font-family="-apple-system, BlinkMacSystemFont, sans-serif">
+    <rect x="830" y="95" width="620" height="190" rx="34" fill="#ffffff" fill-opacity="0.96"/>
+    <circle cx="910" cy="190" r="34" fill="#55d6be"/>
+    <text x="970" y="178" fill="#172b45" font-size="34" font-weight="700">Hand Anchor</text>
+    <text x="970" y="224" fill="#5a6b80" font-family="ui-monospace, SFMono-Regular, monospace" font-size="23">originFromAnchorTransform</text>
+
+    <text x="1140" y="350" text-anchor="middle" fill="#ffffff" font-size="58" font-weight="300">×</text>
+
+    <rect x="830" y="405" width="620" height="190" rx="34" fill="#ffffff" fill-opacity="0.96"/>
+    <circle cx="910" cy="500" r="34" fill="#4ea5ff"/>
+    <text x="970" y="488" fill="#172b45" font-size="34" font-weight="700">Index Tip Joint</text>
+    <text x="970" y="534" fill="#5a6b80" font-family="ui-monospace, SFMono-Regular, monospace" font-size="23">anchorFromJointTransform</text>
+
+    <path d="M1140 625 V670" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
+    <path d="M1115 650 L1140 678 L1165 650" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="830" y="690" width="620" height="140" rx="38" fill="url(#result)"/>
+    <circle cx="910" cy="760" r="38" fill="#ffffff" fill-opacity="0.95"/>
+    <text x="970" y="750" fill="#10283e" font-size="34" font-weight="700">검지 끝의 공간 위치</text>
+    <text x="970" y="793" fill="#173d5e" font-family="ui-monospace, SFMono-Regular, monospace" font-size="23">originFromIndexTip.columns.3.xyz</text>
+  </g>
+</svg>
