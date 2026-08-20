@@ -11,6 +11,7 @@
         @Image(source: ddirori-hero.png, alt: "Ddirori 시작 화면")
 
         @TutorialReference(tutorial: "doc:01-ProjectSetup")
+        @TutorialReference(tutorial: "doc:OnboardingUI")
         @TutorialReference(tutorial: "doc:02-HandTracking")
     }
 
