@@ -1,4 +1,4 @@
-@Tutorials(name: "Ddirori") {
+@Tutorials(name: "[TechMap] Spatial Computing 2026 Ddirori") {
     @Intro(title: "검지로 지휘하는 visionOS 튜토리얼") {
         SwiftUI, ARKit, RealityKit을 연결해 검지 끝으로 4/4박자 경로를 연습하는 공간 앱을 만듭니다.
 

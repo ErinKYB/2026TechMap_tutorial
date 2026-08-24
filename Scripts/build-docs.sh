@@ -9,7 +9,7 @@ OUTPUT_PATH="${PROJECT_DIR}/.build/2026TechMap_tutorial"
 mkdir -p "${PROJECT_DIR}/.build"
 
 xcrun docc convert "${CATALOG_PATH}" \
-  --fallback-display-name "Ddirori Tutorial" \
+  --fallback-display-name "[TechMap] Spatial Computing 2026 Ddirori" \
   --fallback-bundle-identifier "com.erin.DdiroriTutorial" \
   --fallback-bundle-version "1.0.0" \
   --platform "name=visionOS,version=26.0" \
