@@ -1,84 +1,92 @@
 @Tutorial(time: 30) {
-    @Intro(title: "시뮬레이터와 완성된 학습 흐름 연결하기") {
-        가이드 시범, 커서 입력, 검지 파티클, 추적 유실 안내와 세 번 연속 성공을 하나의 상태 모델로 연결합니다.
+    @Intro(title: "실기기 학습 흐름 완성하기") {
+        Hand Tracking 입력, 온보딩 attachment, Beat Zone, 추적 유실 안내와 세 번 연속 성공을 하나의 상태 모델로 연결합니다.
 
-        @Image(source: tutorial-flow.svg, alt: "시작부터 시범, 연습, 추적 중단, 완료로 이어지는 튜토리얼 상태 흐름")
+        @Image(source: tutorial-flow.svg, alt: "시작부터 시범, 연습, 추적 중단과 완료로 이어지는 상태 흐름")
     }
 
-    @Section(title: "시뮬레이터 입력 제공하기") {
+    @Section(title: "상태와 손 추적 연결하기") {
         @ContentAndMedia {
-            visionOS Simulator는 실제 Hand Tracking 데이터를 제공하지 않습니다. 드래그 가능한 가상 검지 Entity가 `FingerTrackingSample`을 만들도록 하면 실제 기기와 완전히 같은 판정 로직을 테스트할 수 있습니다.
+            렌더링 코드가 직접 판정하지 않도록 ViewModel이 손 추적 서비스, 순서 컨트롤러와 상태 전이를 조정합니다. SwiftUI와 RealityKit은 상태를 관찰해 표현만 갱신합니다.
 
-            @Image(source: ddirori-practice.png, alt: "커서로 가상 검지 구체를 이동하는 Beat Zone 연습 화면")
+            @Image(source: tutorial-flow.svg, alt: "띠로리 튜토리얼 상태 머신")
         }
 
         @Steps {
             @Step {
-                `SimulatedHandTrackingService`가 현재 커서 위치를 추적된 샘플로 방출하게 합니다.
+                시작 전, 보정, 시범, 연습, 사이클 성공, 추적 중단, 완료와 복구 가능한 오류 상태를 정의합니다. Beat 판정은 연습 상태에서만 허용합니다.
 
-                @Code(name: "SimulatedHandTrackingService.swift", file: SimulatedHandTrackingService.swift)
+                @Code(name: "TutorialPhase.swift", file: "experience-phase.swift")
             }
 
             @Step {
-                가상 검지 Entity에 `InputTargetComponent`, Collision과 Hover Effect를 추가합니다. 실제 기기 모드에서는 같은 Entity를 표시 전용으로 사용합니다.
+                Immersive Space가 열리면 손 추적 서비스를 만들고, 별도 Task에서 `samples`를 계속 소비합니다. 서비스 시작 실패는 오류 상태로 전환합니다.
 
-                @Code(name: "FingertipEntity.swift", file: FingertipEntity.swift)
+                @Code(name: "TutorialViewModel.swift", file: "experience-view-model-01.swift")
             }
 
             @Step {
-                `RealityView`의 targeted drag gesture에서 공간 좌표를 변환하고 ViewModel에 전달합니다.
+                유효한 샘플만 `BeatSequenceController`에 전달하고 결과에 따라 안내 문구와 상태를 바꿉니다.
 
-                @Code(name: "ImmersiveView.swift", file: ImmersiveView.swift)
+                @Code(name: "TutorialViewModel.swift", file: "experience-view-model-02.swift")
+            }
+
+            @Step {
+                0.4초 이상 손이 보이지 않으면 판정을 멈추고, 8초 이상 유실되면 연속 성공 횟수를 초기화합니다. 복구 직후에는 현재 위치를 판정기에 동기화합니다.
+
+                @Code(name: "TutorialViewModel.swift", file: "experience-view-model-03.swift")
             }
         }
     }
 
-    @Section(title: "상태와 화면 연결하기") {
+    @Section(title: "공간 UI와 완료 흐름 구성하기") {
         @ContentAndMedia {
-            렌더링 코드가 직접 판정하지 않도록 ViewModel이 추적 입력, 순서 컨트롤러, 상태 전이를 조정합니다. SwiftUI와 RealityKit은 상태를 관찰해 표현만 갱신합니다.
+            온보딩과 연습 콘텐츠를 하나의 RealityView 트리 안에 두고 상태에 따라 교대로 표시합니다. Zone 위에는 연속 성공 표시등을, 아래에는 SwiftUI attachment 종료 버튼을 놓습니다.
 
-            @Image(source: tutorial-flow.svg, alt: "튜토리얼 상태 머신")
+            @Image(source: ddirori-practice.png, alt: "Beat Zone, 진행 표시등과 종료 버튼으로 구성된 연습 화면")
         }
 
         @Steps {
             @Step {
-                시작 전, 보정, 시범, 연습, 사이클 성공, 추적 중단, 완료와 오류 상태를 정의합니다.
+                Beat Zone, 검지 구체, 성공 표시등과 텍스트를 `practiceContentEntity` 아래에 조립하고 온보딩 attachment를 같은 공간 중심에 배치합니다.
 
-                @Code(name: "TutorialPhase.swift", file: TutorialPhase.swift)
+                @Code(name: "ImmersiveView.swift", file: "experience-immersive-01.swift")
             }
 
             @Step {
-                서비스의 `samples`를 순회하고 연습 상태에서만 `BeatSequenceController`에 전달합니다.
+                ViewModel 상태가 바뀔 때 Zone 색·크기, 검지 위치, 연속 성공 표시등과 완료 텍스트를 갱신합니다.
 
-                @Code(name: "TutorialViewModel.swift", file: TutorialViewModel.swift)
+                @Code(name: "ImmersiveView.swift", file: "experience-immersive-02.swift")
             }
 
             @Step {
-                추적이 잠깐 끊기면 판정을 멈추고 손을 시야 안으로 가져오라는 메시지를 표시합니다. 장기 유실 시에는 연속 성공을 초기화합니다.
+                하단 ornament에 현재 안내, Beat 진행과 다시 보기 버튼을 표시합니다. 오류 상태에서는 Hand Tracking을 다시 시도할 수 있게 합니다.
+
+                @Code(name: "ImmersiveStatusOrnament.swift", file: "experience-ornament.swift")
             }
 
             @Step {
-                한 사이클 성공 연출 동안 입력을 잠그고, 세 번째 연속 성공 뒤 완료 상태로 전환합니다.
+                세 번째 연속 성공 뒤 중앙에 “성공!”을 표시하고 3초 후 자원을 정리한 다음 Immersive Space를 닫습니다.
             }
         }
     }
 
-    @Section(title: "두 환경에서 검증하기") {
+    @Section(title: "실기기에서 검증하기") {
         @Steps {
             @Step {
-                visionOS Simulator에서 시뮬레이션 모드를 선택하고 가상 검지를 `1 → 2 → 3 → 4` 순서로 드래그합니다.
+                Apple Vision Pro에서 오른손과 왼손을 각각 사용해 온보딩과 `1 → 2 → 3 → 4` 판정을 확인합니다.
             }
 
             @Step {
-                한 Zone 내부에 계속 머물러도 한 번만 처리되고, 다른 Zone을 먼저 지나가도 현재 Beat가 바뀌지 않는지 확인합니다.
+                한 Zone 내부에 머물러도 한 번만 처리되고, 다른 Zone을 먼저 지나가도 현재 Beat가 바뀌지 않는지 확인합니다.
             }
 
             @Step {
-                Apple Vision Pro에서 실기기 모드를 선택하고 검지 구체와 파티클, 손 추적 권한, 좌표 정렬을 확인합니다.
+                연습 중 손을 잠시 숨겼다가 목표 Zone 안에서 다시 보여도 Beat가 잘못 증가하지 않는지 확인합니다.
             }
 
             @Step {
-                세 사이클 연속 성공 후 완료 피드백이 나타나고 Immersive Space가 안전하게 종료되는지 확인합니다.
+                세 사이클 연속 성공 후 완료 피드백이 나타나고 Immersive Space가 자동으로 안전하게 종료되는지 확인합니다.
             }
         }
     }

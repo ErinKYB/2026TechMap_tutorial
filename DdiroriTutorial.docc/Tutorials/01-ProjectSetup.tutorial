@@ -1,15 +1,15 @@
 @Tutorial(time: 20) {
-    @Intro(title: "visionOS 공간 앱 시작하기") {
-        SwiftUI App lifecycle로 시작 화면과 Immersive Space를 구성하고, 실제 손 추적과 커서 시뮬레이션 중 하나를 선택할 수 있게 만듭니다.
+    @Intro(title: "Apple Vision Pro용 공간 앱 시작하기") {
+        SwiftUI App 생명 주기로 시작 창과 mixed Immersive Space를 구성하고, 두 Scene이 하나의 `TutorialViewModel`을 공유하도록 연결합니다.
 
-        @Image(source: ddirori-hero.png, alt: "실기기 Hand Tracking과 시뮬레이션 입력을 선택하는 Ddirori 화면")
+        @Image(source: ddirori-hero.png, alt: "띠로리 앱의 튜토리얼 시작 창")
     }
 
     @Section(title: "프로젝트와 Scene 구성") {
         @ContentAndMedia {
-            Ddirori는 일반 창에서 연습 방법을 선택하고, 실제 공간 콘텐츠는 mixed Immersive Space에서 보여줍니다. 하나의 `TutorialViewModel`을 두 Scene에 주입하면 화면이 바뀌어도 상태를 공유할 수 있습니다.
+            띠로리는 일반 창에서 튜토리얼을 시작하고, 지휘 시범과 연습 콘텐츠는 mixed Immersive Space에 표시합니다. 하나의 관찰 가능한 모델을 두 Scene에 주입하면 공간이 바뀌어도 진행 상태를 유지할 수 있습니다.
 
-            @Image(source: ddirori-hero.png, alt: "Ddirori의 시작 창")
+            @Image(source: ddirori-hero.png, alt: "Apple Vision Pro 실기기에서 진행한다고 안내하는 시작 화면")
         }
 
         @Steps {
@@ -18,37 +18,35 @@
             }
 
             @Step {
-                `WindowGroup`과 `ImmersiveSpace`를 선언하고 같은 `TutorialViewModel`을 environment에 전달합니다.
+                `WindowGroup`과 `ImmersiveSpace`를 선언하고, 같은 `TutorialViewModel`을 environment에 전달합니다. 시작 창은 plain 스타일로 지정하고 Immersive Space는 mixed 모드로 고정합니다.
 
-                @Code(name: "ddiroriApp.swift", file: ddiroriApp.swift)
+                @Code(name: "ddiroriApp.swift", file: "setup-ddirori-app.swift")
             }
 
             @Step {
-                시작 화면에서 `openImmersiveSpace`를 호출하고 결과가 `.opened`일 때만 모델의 진입 이벤트를 전달합니다.
+                시작 버튼에서 `openImmersiveSpace`를 호출하고 `.opened`일 때만 모델에 진입 이벤트를 전달합니다. 열기에 실패하면 창 안에 오류 안내를 표시합니다.
 
-                @Code(name: "ContentView.swift", file: ContentView.swift)
+                @Code(name: "ContentView.swift", file: "setup-content-view.swift")
             }
         }
     }
 
-    @Section(title: "입력 모드 경계 만들기") {
+    @Section(title: "실기기 권한 준비") {
         @ContentAndMedia {
-            실기기와 시뮬레이터는 입력을 얻는 방법만 다르고 이후 판정은 같아야 합니다. 시작 화면에서는 입력 모드만 고르고, ViewModel이 알맞은 서비스를 생성하도록 책임을 나눕니다.
+            최종 앱은 Apple Vision Pro의 ARKit Hand Tracking을 직접 사용합니다. Simulator에서는 시작 화면과 정적 공간 배치를 확인할 수 있지만 실제 손 입력을 진행할 수 없습니다.
         }
 
         @Steps {
             @Step {
-                `InputMode`에 실제 Hand Tracking과 시뮬레이터 모드를 정의하고 사용자에게 각 환경의 차이를 설명합니다.
-
-                @Code(name: "InputMode.swift", file: InputMode.swift)
-            }
-
-            @Step {
-                실제 기기에서 손 추적을 사용할 수 있도록 앱의 Info 설정에 `NSHandsTrackingUsageDescription`을 추가합니다.
+                앱의 Info 설정에 `NSHandsTrackingUsageDescription`을 추가해 손 추적을 사용하는 이유를 설명합니다.
             }
 
             @Step {
                 Signing & Capabilities에서 자신의 Development Team을 선택합니다. 팀 식별자는 저장소에 고정하지 않는 편이 협업에 안전합니다.
+            }
+
+            @Step {
+                Apple Vision Pro를 Mac과 페어링하고 실행 대상으로 선택합니다. 처음 실행할 때 나타나는 Hand Tracking 권한 요청을 허용합니다.
             }
         }
     }

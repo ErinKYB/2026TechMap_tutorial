@@ -1,12 +1,21 @@
 @Tutorials(name: "[TechMap] Spatial Computing 2026 Ddirori") {
     @Intro(title: "검지로 지휘하는 visionOS 튜토리얼") {
-        SwiftUI, ARKit, RealityKit을 연결해 검지 끝으로 4/4박자 경로를 연습하는 공간 앱을 만듭니다.
+        SwiftUI, ARKit, RealityKit을 연결해 Apple Vision Pro에서 오른손이나 왼손 검지로 4/4박자 경로를 연습하는 공간 앱을 만듭니다.
+
+        **예상 소요 시간:** 약 2시간 5분
+
+        **선행 지식:**
+
+        - Swift의 구조체, 열거형, 프로토콜과 `async`/`await` 문법
+        - SwiftUI의 App 생명 주기, 상태 관리와 데이터 흐름
+        - Xcode에서 visionOS 프로젝트를 만들고 실기기에 실행하는 방법
+        - 3D 좌표계, 벡터와 변환 행렬에 대한 기초 개념
 
         @Image(source: ddirori-hero.png, alt: "거실 공간 위에 Ddirori 입력 방식 선택 화면이 떠 있는 모습")
     }
 
     @Chapter(name: "공간 앱의 뼈대") {
-        Window와 Immersive Space를 연결하고, 실기기와 시뮬레이터가 공유할 입력 경계를 설계합니다.
+        시작 창과 Immersive Space를 연결하고, 실제 연습과 같은 위치에 온보딩 attachment를 배치한 뒤 양손 Hand Tracking을 시작합니다.
 
         @Image(source: ddirori-hero.png, alt: "Ddirori 시작 화면")
 
@@ -16,7 +25,7 @@
     }
 
     @Chapter(name: "박자 판정과 학습 경험") {
-        Beat Zone을 배치하고 경계 진입으로 순서를 판정한 다음, 추적 유실과 반복 학습 흐름을 완성합니다.
+        Beat Zone을 배치하고 경계 진입으로 순서를 판정한 다음, 추적 복구와 실기기 반복 학습 흐름을 완성합니다.
 
         @Image(source: ddirori-practice.png, alt: "공간에 1부터 4까지 Beat Zone이 배치된 연습 화면")
 

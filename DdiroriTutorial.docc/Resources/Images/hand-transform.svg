@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
   <title id="title">검지 끝 좌표 변환</title>
-  <desc id="description">Hand Anchor와 검지 끝 Joint 변환을 결합해 공통 공간 위치를 얻는 흐름</desc>
+  <desc id="description">현재 추적 중인 손을 안정적으로 선택한 뒤 Hand Anchor와 검지 끝 Joint 변환을 결합해 공통 공간 위치를 얻는 흐름</desc>
   <defs>
     <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#080d18"/>
@@ -19,7 +19,7 @@
   <g filter="url(#shadow)" font-family="-apple-system, BlinkMacSystemFont, sans-serif">
     <rect x="830" y="95" width="620" height="190" rx="34" fill="#ffffff" fill-opacity="0.96"/>
     <circle cx="910" cy="190" r="34" fill="#55d6be"/>
-    <text x="970" y="178" fill="#172b45" font-size="34" font-weight="700">Hand Anchor</text>
+    <text x="970" y="178" fill="#172b45" font-size="34" font-weight="700">선택한 Hand Anchor</text>
     <text x="970" y="224" fill="#5a6b80" font-family="ui-monospace, SFMono-Regular, monospace" font-size="23">originFromAnchorTransform</text>
 
     <text x="1140" y="350" text-anchor="middle" fill="#ffffff" font-size="58" font-weight="300">×</text>
