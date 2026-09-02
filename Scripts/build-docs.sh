@@ -23,4 +23,8 @@ xcrun docc convert "${CATALOG_PATH}" \
 xcrun docc process-archive transform-for-static-hosting "${OUTPUT_PATH}" \
   --hosting-base-path "2026TechMap_tutorial"
 
+# Xcode 26 DocC Render는 Section 첫 코드의 highlights가 비어 있으면
+# 해당 Section으로 전환할 때 코드 패널을 빈 화면으로 남길 수 있습니다.
+python3 "${SCRIPT_DIR}/fix-tutorial-code-highlights.py" "${OUTPUT_PATH}"
+
 echo "DocC site: ${OUTPUT_PATH}"

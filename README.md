@@ -7,7 +7,7 @@ Apple Vision Pro에서 검지 끝으로 네 개의 Beat Zone을 따라가며 4/4
 1. SwiftUI `WindowGroup`과 `ImmersiveSpace` 구성
 2. `ARKitSession`과 `HandTrackingProvider`로 검지 끝 좌표 계산
 3. RealityKit Beat Zone과 경계 진입 기반 순서 판정
-4. 시뮬레이터 입력, 추적 유실 복구, 3회 연속 성공 흐름
+4. 양손 선택, 추적 유실 복구, 3회 연속 성공 흐름
 
 ## 요구 사항
 
@@ -41,4 +41,4 @@ python3 -m http.server 8000
 
 `main` 브랜치에 push하면 `.github/workflows/deploy-docs.yml`이 DocC 정적 사이트를 빌드하고 GitHub Pages에 배포합니다. 저장소의 **Settings → Pages → Source**는 **GitHub Actions**로 설정해야 합니다.
 
-> 실제 Hand Tracking은 visionOS Simulator에서 제공되지 않습니다. 시뮬레이터에서는 커서 드래그 입력으로 동일한 Beat 판정 흐름을 확인합니다.
+> 실제 Hand Tracking은 visionOS Simulator에서 제공되지 않습니다. UI 배치와 빌드는 Simulator에서 확인할 수 있지만, 손 선택과 Beat 판정은 Apple Vision Pro 실기기에서 확인합니다.
