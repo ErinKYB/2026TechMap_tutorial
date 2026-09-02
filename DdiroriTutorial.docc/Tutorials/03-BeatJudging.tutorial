@@ -41,6 +41,8 @@
         @Steps {
             @Step {
                 손가락과 현재 목표 중심의 거리를 `simd_distance`로 구하고 판정 반경과 비교합니다.
+
+                @Code(name: "BeatJudge.swift", file: "judging-beat-judge.swift")
             }
 
             @Step {
@@ -51,6 +53,8 @@
 
             @Step {
                 추적이 유효하지 않으면 내부 상태를 바깥으로 되돌립니다. 추적 복구 직후에는 현재 위치로 다시 동기화해 손가락이 목표 안에서 재발견됐을 때 가짜 진입이 생기지 않게 합니다.
+
+                @Code(name: "BeatJudge.swift", file: "judging-beat-judge.swift")
             }
         }
     }

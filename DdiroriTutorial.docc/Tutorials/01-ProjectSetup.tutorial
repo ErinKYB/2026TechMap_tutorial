@@ -39,14 +39,20 @@
         @Steps {
             @Step {
                 앱의 Info 설정에 `NSHandsTrackingUsageDescription`을 추가해 손 추적을 사용하는 이유를 설명합니다.
+
+                @Code(name: "Info.plist", file: "setup-info.plist")
             }
 
             @Step {
                 Signing & Capabilities에서 자신의 Development Team을 선택합니다. 팀 식별자는 저장소에 고정하지 않는 편이 협업에 안전합니다.
+
+                @Code(name: "Info.plist", file: "setup-info.plist")
             }
 
             @Step {
                 Apple Vision Pro를 Mac과 페어링하고 실행 대상으로 선택합니다. 처음 실행할 때 나타나는 Hand Tracking 권한 요청을 허용합니다.
+
+                @Code(name: "Info.plist", file: "setup-info.plist")
             }
         }
     }

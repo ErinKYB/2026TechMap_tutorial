@@ -53,6 +53,8 @@
 
             @Step {
                 Anchor나 Joint가 유효하지 않으면 이전 위치를 재사용하지 말고 `position == nil`, `isTracked == false`인 샘플을 방출합니다.
+
+                @Code(name: "HandTrackingService.swift", file: "hand-tracking-05.swift")
             }
         }
     }

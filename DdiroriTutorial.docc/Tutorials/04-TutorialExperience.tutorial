@@ -67,6 +67,8 @@
 
             @Step {
                 세 번째 연속 성공 뒤 중앙에 “성공!”을 표시하고 3초 후 자원을 정리한 다음 Immersive Space를 닫습니다.
+
+                @Code(name: "ImmersiveView.swift", file: "experience-immersive-02.swift")
             }
         }
     }
